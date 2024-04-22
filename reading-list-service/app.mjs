@@ -61,8 +61,7 @@ app.get("/reading-list/books/:uuid", (req, res) => {
     return res.status(400).json({ error: "missing or invalid UUID" });
   }
   if (!cache.has(uuid)) {
-    while(true) {
-    }
+    await sleep(6000); // 6 seconds
     return res.status(404).json({ error: "UUID does not exist" });
   }
   const value = cache.get(uuid);
