@@ -55,13 +55,13 @@ app.get("/reading-list/books", (_, res) => {
 });
 
 // get a book by uuid
-app.get("/reading-list/books/:uuid", (req, res) => {
+app.get("/reading-list/books/:uuid", async(req, res) => {
   const uuid = req.params.uuid;
   if (!uuid || typeof uuid !== "string") {
     return res.status(400).json({ error: "missing or invalid UUID" });
   }
   if (!cache.has(uuid)) {
-    await sleep(6000); // 6 seconds
+    await new Promise((resolve) => setTimeout(resolve, 6000));
     return res.status(404).json({ error: "UUID does not exist" });
   }
   const value = cache.get(uuid);
